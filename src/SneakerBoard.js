@@ -1,4 +1,4 @@
-const TABLE_SIZE = 15 * 15;
+import { SNAKER_BOARD_FIELDS } from "./SneakerLogic";
 
 function SneakerBoard(props){
     return(<div className='Sneaker-Board'>
@@ -7,13 +7,9 @@ function SneakerBoard(props){
     </div>)
 }
 
-function SnakerBoardFields(props){
-    let tableFieldStore = []
-    for(let i = 0; i < TABLE_SIZE; i++){
-       tableFieldStore.push(i);
-    }
+function SnakerBoardFields(){
     return(<>
-    {tableFieldStore.map((i) => <div key={i} className='Board-Field'></div>)}
+    {SNAKER_BOARD_FIELDS.map((field) => <div key={ field.id } style={{backgroundColor: field.color}} className='Board-Field'>{field.id}</div>)}
     </>);
 }
 

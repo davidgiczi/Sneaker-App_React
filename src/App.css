@@ -1,17 +1,37 @@
-.Sneaker-App {
-text-align: center;
+@media (max-width: 800px) {
+
+  .Sneaker-App {
+    text-align: center;
+    padding-top: 50%;
+    }
 }
 
+@media (min-width: 800px) {
+
+  .Sneaker-App {
+    text-align: center;
+    padding-left: 32%;
+    padding-top: 3%;
+    }
+}
+
+
 .Sneaker-Board{
- position: relative;
  display: flex;
  flex-direction: row;
- justify-content: center;
  flex-wrap: wrap;
+ justify-content: center;
+ height: 600px;
+ width: 640px;
 }
+
 .Board-Field{
   position: relative;
   z-index: 1;
+  border: 1px solid black;
+  height: 40px;
+  width: 40px;
+  border-radius: 40%;
 }
 img {
   position: fixed; 
@@ -21,33 +41,3 @@ img {
   height: 100%;
 }
 
-@media (min-width: 800px) {
-
-  .Sneaker-Board{
-    padding-left: 12%;
-    padding-right: 12%;
-    padding-top: 8%;
-  }
-  .Board-Field{
-    flex: 1 1 6.5%;
-    border: 1px solid red;
-    width: 10px;
-    height: 30px;
-    border-radius: 20px;
-  }
-}
-
-@media (max-width: 800px) {
-
-.Sneaker-Board {
-  padding: 10%;
-  padding-top: 30%;
-}
-.Board-Field {
-  flex: 1 1 6%;
-  border: 1px solid blue;
-  height: 25px;
-  border-radius: 10px;
-}
-
-}
