@@ -1,6 +1,7 @@
 @media (max-width: 800px) {
 
   .Sneaker-App {
+    z-index: 1;
     text-align: center;
     padding-top: 50%;
     }
@@ -10,18 +11,23 @@
   }
 
   button {
-    height: 100px;
-    width: 100px;
+    height: 70px;
+    width: 70px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 80px 70px;
+    border-radius: 40px;
+    border: none;
   }
 
   .Up-btn{
     margin-top: 50px;
   }
 #left-btn {
-  margin-right: 50px;
+  margin-right: 80px;
 }
 #right-btn {
-  margin-left: 50px;
+  margin-left: 80px;
 }
 }
 
@@ -35,22 +41,24 @@
 }
 
 .Sneaker-Board{
+  z-index: 1;
  display: flex;
  flex-direction: row;
  flex-wrap: wrap;
  justify-content: center;
  height: 600px;
  width: 640px;
+ border: 1px solid red;
 }
 
 .Board-Field{
   position: relative;
   z-index: 1;
-  border: 1px solid black;
   height: 40px;
   width: 40px;
   border-radius: 40%;
 }
+
 img {
   position: fixed; 
   top: 0; 
