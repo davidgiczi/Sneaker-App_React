@@ -1,17 +1,27 @@
-
 const TABLE_SIZE = 15 * 15;
-let boardField = {id: null,
-              color: null,
+const SNAKE = [0, 1];
+const YELLOW = "#f9e35f";
+const RED =  "#f95151";
+const GREEN = "#0b6623";
+const BROWN = "#72601b";
+let boardField = {
+            id: null,
+            color: null,
             borderTop: null,
             borderRight: null,
             borderBottom: null,
             borderLeft: null
         }
-let SNAKER_BOARD_FIELDS = initGame();
-
+const GAME_BOARD = [];
+initGame();
 
 function initGame(){
-    let fieldStore = [];
+    createGameBoard();
+    addSnake();
+}
+
+function createGameBoard(){
+
     for(let i =  0; i < TABLE_SIZE; i++){
 
         boardField = {};
@@ -29,11 +39,21 @@ function initGame(){
         if( i % 15 === 0 ){
             boardField.borderLeft = '5px solid #818c3c';
         }
-        fieldStore.push(boardField);
+        GAME_BOARD.push(boardField);
     }
-    return fieldStore;
 }
 
-export { TABLE_SIZE, SNAKER_BOARD_FIELDS };
+function addSnake(){
+for(let i = 0; i < SNAKE.length - 1; i++){
+    GAME_BOARD[SNAKE[i]].color = YELLOW; 
+}
+GAME_BOARD[SNAKE[SNAKE.length - 1]].color = RED;
+}
+
+function stepSnake(){
+
+}
+
+export { TABLE_SIZE, GAME_BOARD };
 
 

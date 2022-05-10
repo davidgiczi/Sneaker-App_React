@@ -1,4 +1,4 @@
-import { SNAKER_BOARD_FIELDS } from './SneakerLogic';
+import { GAME_BOARD } from './SneakerLogic';
 import upArrow from './icons/up.jpg';
 import downArrow from './icons/down.jpg';
 import leftArrow from './icons/left.jpg';
@@ -18,14 +18,14 @@ function SneakerBoard(props){
 }
 
 function SnakerBoardFields(){
-
     return(<>
-    {SNAKER_BOARD_FIELDS.map((field) => 
+    {GAME_BOARD.map((field) => 
     <div key={ field.id } style={{backgroundColor: field.color, 
                                     borderTop: field.borderTop,
                                     borderRight: field.borderRight,
                                     borderBottom: field.borderBottom,
-                                    borderLeft: field.borderLeft}} className='Board-Field'>{field.id}</div>)}
+                                    borderLeft: field.borderLeft}} 
+                                    className='Board-Field'>{field.id}</div>)}
     </>);
 }
 
