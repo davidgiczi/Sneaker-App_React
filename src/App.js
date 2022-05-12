@@ -1,6 +1,6 @@
 import './App.css';
 import SneakerBoard from './SneakerBoard';
-import tree from './image/tree.jpg'
+import tree from './image/tree.jpg';
 
 function App() {
   return (

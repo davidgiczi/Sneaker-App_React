@@ -1,9 +1,6 @@
-const TABLE_SIZE = 15 * 15;
-const SNAKE = [0, 1];
-const YELLOW = "#f9e35f";
-const RED =  "#f95151";
-const GREEN = "#0b6623";
-const BROWN = "#72601b";
+import { SnakeComponent, BoardComponent } from './Component';
+import { BOARD_SIZE, YELLOW, RED, GREEN, BROWN, LEFT, RIGHT, NORTH, EAST, SOUTH, WEST } from './Constans';
+const SNAKE = [];
 let boardField = {
             id: null,
             color: null,
@@ -17,12 +14,12 @@ initGame();
 
 function initGame(){
     createGameBoard();
-    addSnake();
-}
+    addSnakeToGameBoard();
+};
 
 function createGameBoard(){
 
-    for(let i =  0; i < TABLE_SIZE; i++){
+    for(let i =  0; i < BOARD_SIZE; i++){
 
         boardField = {};
         boardField.id = i;
@@ -43,17 +40,19 @@ function createGameBoard(){
     }
 }
 
-function addSnake(){
-for(let i = 0; i < SNAKE.length - 1; i++){
-    GAME_BOARD[SNAKE[i]].color = YELLOW; 
-}
-GAME_BOARD[SNAKE[SNAKE.length - 1]].color = RED;
+function addSnakeToGameBoard(){
+    const snakeBody = new SnakeComponent(0, YELLOW, EAST);
+    const snakeHead = new SnakeComponent(1, RED, EAST);
+    SNAKE.push(snakeBody);
+    SNAKE.push(snakeHead);
+    GAME_BOARD[SNAKE[0].boardIndex].color = SNAKE[0].color;
+    GAME_BOARD[SNAKE[1].boardIndex].color = SNAKE[1].color;
 }
 
 function stepSnake(){
 
 }
 
-export { TABLE_SIZE, GAME_BOARD };
+export { GAME_BOARD };
 
 
