@@ -1,4 +1,6 @@
-import { GAME_BOARD, stepSnake } from './SneakerLogic';
+import { GAME_BOARD, stepSnake, 
+    turnLeftIfGoHorizontal, turnRightIfGoHorizontal, 
+    turnSnakeLeftIfGoVertical, turnRightIfGoVertical } from './SneakerLogic';
 import upArrow from './icons/up.jpg';
 import downArrow from './icons/down.jpg';
 import leftArrow from './icons/left.jpg';
