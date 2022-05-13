@@ -1,13 +1,25 @@
-import { GAME_BOARD } from './SneakerLogic';
+import { GAME_BOARD, stepSnake } from './SneakerLogic';
 import upArrow from './icons/up.jpg';
 import downArrow from './icons/down.jpg';
 import leftArrow from './icons/left.jpg';
 import rightArrow from './icons/right.jpg';
+import { useState, useEffect } from 'react';
 
 function SneakerBoard(props){
+const[gameBoard, setGameBoard] = useState(GAME_BOARD);
+
+    useEffect(() => {
+        setTimeout(() => {
+            step();
+            setGameBoard(() => [...GAME_BOARD]);
+    }, 1000);
+  });
+
+    const step = () => {stepSnake(); setGameBoard(() => [...GAME_BOARD])}
+    
     return(<div className='Sneaker-Board'>
         <img src={props.image} alt='Nice-tree'></img>
-        <SnakerBoardFields/>
+        <SnakerBoardFields board={gameBoard}/>
         <SnakeNavigationButtons className='Navigation-Button' 
         up = {'url(' +  upArrow + ')' }
         down = {'url(' +  downArrow + ')' }
@@ -17,9 +29,9 @@ function SneakerBoard(props){
     </div>)
 }
 
-function SnakerBoardFields(){
+function SnakerBoardFields(props){
     return(<>
-    {GAME_BOARD.map((field) => 
+    {props.board.map((field) => 
     <div key={ field.id } style={{backgroundColor: field.color, 
                                     borderTop: field.borderTop,
                                     borderRight: field.borderRight,
@@ -32,7 +44,7 @@ function SnakerBoardFields(){
 function SnakeNavigationButtons(props){
 return(<div className='Navigation-btn'>
 <div className='Up-btn'>
-<button id='up-btn' style={{backgroundImage : props.up}}></button>
+<button id='up-btn' style={{backgroundImage : props.up}} onClick={props.onClick}></button>
 </div>
 <div>
 <button id='left-btn' style={{backgroundImage : props.left}}></button>
