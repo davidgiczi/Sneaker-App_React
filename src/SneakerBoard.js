@@ -1,17 +1,17 @@
-import { GAME_BOARD, stepSnake, 
-    turnLeftSnakeIfStepHorizontal, turnRightSnakeIfStepHorizontal, 
-    turnLeftSnakeIfStepVertical, turnRightSnakeIfStepVertical } from './SneakerLogic';
+import { GAME_BOARD, stepSnake, turnNorthSnakeIfStepHorizontal, turnSouthSnakeIfStepHorizontal,
+                                turnWestSnakeIfStepVertical, turnEastSnakeIfStepVertical } from './SneakerLogic';
 import upArrow from './icons/up.jpg';
 import downArrow from './icons/down.jpg';
 import leftArrow from './icons/left.jpg';
 import rightArrow from './icons/right.jpg';
 import { useState, useEffect } from 'react';
+let play;
   
 function SneakerBoard(props){
 const[gameBoard, setGameBoard] = useState(GAME_BOARD);
-
+   
     useEffect(() => {
-        setTimeout(() => {
+   play = setTimeout(() => {
             stepSnake();
             setGameBoard(() => [...GAME_BOARD])
     }, 1000);
@@ -22,19 +22,20 @@ const[gameBoard, setGameBoard] = useState(GAME_BOARD);
  },[]);
 
   const handleKeyPress = (event) => {
-
+    clearTimeout(play);
     if(event.key === 'ArrowLeft'){
-     console.log('west');
+    turnWestSnakeIfStepVertical();
     }
     else if(event.key === 'ArrowUp'){
-    console.log('north');
+    turnNorthSnakeIfStepHorizontal();
     }
     else if(event.key === 'ArrowRight'){
-     console.log('east');
+    turnEastSnakeIfStepVertical();
     }
     else if(event.key === 'ArrowDown'){
-    console.log('south');
+    turnSouthSnakeIfStepHorizontal();
     }
+    setGameBoard(() => [...GAME_BOARD])
 }
   
     return(<div className='Sneaker-Board'>
@@ -45,6 +46,7 @@ const[gameBoard, setGameBoard] = useState(GAME_BOARD);
         down = {'url(' +  downArrow + ')' }
         left = {'url(' +  leftArrow + ')' }
         right = {'url(' +  rightArrow + ')' }
+        onClick={() => alert('Hi Dave!')}
         />
     </div>)
 }
@@ -65,14 +67,14 @@ function SnakeNavigationButtons(props){
 
 return(<div className='Navigation-btn'>
 <div className='Up-btn'>
-<button id='up-btn' style={{backgroundImage : props.up}}></button>
+<button id='up-btn' style={{backgroundImage : props.up}} onClick={props.onClick}></button>
 </div>
 <div>
-<button id='left-btn' style={{backgroundImage : props.left}}></button>
-<button id='right-btn' style={{backgroundImage : props.right}}></button>
+<button id='left-btn' style={{backgroundImage : props.left}}  onClick={props.onClick}></button>
+<button id='right-btn' style={{backgroundImage : props.right}}  onClick={props.onClick}></button>
 </div>
 <div>
-<button id='down-btn' style={{backgroundImage : props.down}}></button>
+<button id='down-btn' style={{backgroundImage : props.down}}  onClick={props.onClick}></button>
 </div>
 </div>);
 }
