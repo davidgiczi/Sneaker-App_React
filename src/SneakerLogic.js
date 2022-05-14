@@ -1,5 +1,6 @@
-import { SnakeComponent } from './SnakeComponent';
-import { BOARD_SIZE, YELLOW, RED, GREEN, BROWN, LEFT, RIGHT, NORTH, EAST, SOUTH, WEST, BOARD_COLUMN, BOARD_ROW } from './Constans';
+import { BoardComponent } from './BoardComponent';
+import { BOARD_SIZE, YELLOW, RED, GREEN, BROWN, LEFT, RIGHT, NORTH, EAST,
+     SOUTH, WEST, BOARD_COLUMN, BOARD_ROW, NUMBER_OF_LEAF, NUMBER_OF_BRANCH } from './Constans';
 const SNAKE = [];
 let boardField = {
             id: null,
@@ -42,8 +43,8 @@ function createGameBoard(){
 }
 
 function createSnake(){
-    const snakeBody = new SnakeComponent(0, 0, YELLOW, null);
-    const snakeHead = new SnakeComponent(0, 1, RED, EAST);
+    const snakeBody = new BoardComponent(0, 0, YELLOW, null);
+    const snakeHead = new BoardComponent(0, 1, RED, EAST);
     SNAKE.push(snakeBody);
     SNAKE.push(snakeHead);
 }
@@ -85,30 +86,30 @@ const snakeHead = SNAKE[headIndex];
 SNAKE[headIndex].color = YELLOW;
 let head;
 if(snakeHead.direction === EAST){
-head = new SnakeComponent(snakeHead.row, snakeHead.col + 1, RED, snakeHead.direction);
+head = new BoardComponent(snakeHead.row, snakeHead.col + 1, RED, snakeHead.direction);
 }
 else if(snakeHead.direction === SOUTH){
-head = new SnakeComponent(snakeHead.row + 1, snakeHead.col, RED, snakeHead.direction);
+head = new BoardComponent(snakeHead.row + 1, snakeHead.col, RED, snakeHead.direction);
 }
 else if(snakeHead.direction === WEST){
-head = new SnakeComponent(snakeHead.row, snakeHead.col - 1, RED, snakeHead.direction);
+head = new BoardComponent(snakeHead.row, snakeHead.col - 1, RED, snakeHead.direction);
 }
 else if(snakeHead.direction === NORTH){
-head = new SnakeComponent(snakeHead.row - 1, snakeHead.col, RED, snakeHead.direction);
+head = new BoardComponent(snakeHead.row - 1, snakeHead.col, RED, snakeHead.direction);
 }
 SNAKE.push(head);
 GAME_BOARD[SNAKE[0].boardIndex].color = 'transparent';
 SNAKE.shift();
 }
 
-function turnLeftSnakeIfGoHorizontal(){
-if( canTurnLeftIfGoHorizontal() ){
-    turnLeftIfGoHorizontal();
+function turnLeftSnakeIfStepHorizontal(){
+if( canTurnLeftIfStepHorizontal() ){
+    turnLeftIfStepHorizontal();
     addSnakeToGameBoard();
 }
 }
 
-function canTurnLeftIfGoHorizontal(){
+function canTurnLeftIfStepHorizontal(){
 const headIndex = SNAKE.length - 1;
 const snakeHead = SNAKE[headIndex];
 if(snakeHead.direction === EAST && snakeHead.row - 1 >= 0){
@@ -121,30 +122,30 @@ return true;
 return false;
 }
 
-function turnLeftIfGoHorizontal(){
+function turnLeftIfStepHorizontal(){
     const headIndex = SNAKE.length - 1;
     const snakeHead = SNAKE[headIndex];
     SNAKE[headIndex].color = YELLOW;
     let head;
     if(snakeHead.direction === EAST){
-        head = new SnakeComponent(snakeHead.row - 1, snakeHead.col, RED, NORTH);
+        head = new BoardComponent(snakeHead.row - 1, snakeHead.col, RED, NORTH);
     }
     else if(snakeHead.direction === WEST){
-        head = new SnakeComponent(snakeHead.row + 1, snakeHead.col, RED, SOUTH);
+        head = new BoardComponent(snakeHead.row + 1, snakeHead.col, RED, SOUTH);
     }
     SNAKE.push(head);
     GAME_BOARD[SNAKE[0].boardIndex].color = 'transparent';
     SNAKE.shift();
 }
 
-function turnRightSnakeIfGoHorizontal(){
-    if( canTurnRightIfGoHorizontal() ){
-        turnRightIfGoHorizontal();
+function turnRightSnakeIfStepHorizontal(){
+    if( canTurnRightIfStepHorizontal() ){
+        turnRightIfStepHorizontal();
         addSnakeToGameBoard();
     }
 }
 
-function canTurnRightIfGoHorizontal(){
+function canTurnRightIfStepHorizontal(){
 const headIndex = SNAKE.length - 1;
 const snakeHead = SNAKE[headIndex];
 if(snakeHead.direction === EAST && snakeHead.row + 1 < BOARD_ROW){
@@ -153,65 +154,86 @@ return true;
 else if(snakeHead.direction === WEST && snakeHead.row - 1 >= 0){
 return true;
 }
-
 return false;
 }
 
-function turnRightIfGoHorizontal(){
+function turnRightIfStepHorizontal(){
 const headIndex = SNAKE.length - 1;
 const snakeHead = SNAKE[headIndex];
 SNAKE[headIndex].color = YELLOW;
 let head;
 if(snakeHead.direction === EAST){
-    head = new SnakeComponent(snakeHead.row + 1, snakeHead.col, RED, SOUTH);
+    head = new BoardComponent(snakeHead.row + 1, snakeHead.col, RED, SOUTH);
 }
 else if(snakeHead.direction === WEST){
-    head = new SnakeComponent(snakeHead.row - 1, snakeHead.col, RED, NORTH);
+    head = new BoardComponent(snakeHead.row - 1, snakeHead.col, RED, NORTH);
 }
 SNAKE.push(head);
 GAME_BOARD[SNAKE[0].boardIndex].color = 'transparent';
 SNAKE.shift();
 }
 
-function turnSnakeLeftIfGoVertical(){
-if( canTurnLeftIfGoVertical() ){
-    turnLeftIfGoVertical();
+function turnLeftSnakeIfStepVertical(){
+if( canTurnLeftIfStepVertical() ){
+    turnLeftIfStepVertical();
     addSnakeToGameBoard();
 }
 }
-function canTurnLeftIfGoVertical(){
+function canTurnLeftIfStepVertical(){
 const headIndex = SNAKE.length - 1;
 const snakeHead = SNAKE[headIndex];
+if(snakeHead.direction === NORTH && snakeHead.col - 1 > 0){
+return true;
+    }
+else if(snakeHead.direction === SOUTH && snakeHead.col + 1 < BOARD_COLUMN){
+return true;
+    }
 return false;
 }
-function turnLeftIfGoVertical(){
+function turnLeftIfStepVertical(){
     const headIndex = SNAKE.length - 1;
     const snakeHead = SNAKE[headIndex];
     SNAKE[headIndex].color = YELLOW;
     let head;
-
+    if(snakeHead.direction === NORTH){
+        head = new BoardComponent(snakeHead.row, snakeHead.col - 1, RED, WEST);
+    }
+    else if(snakeHead.direction === SOUTH){
+        head = new BoardComponent(snakeHead.row, snakeHead.col + 1, RED, EAST);
+    }
     SNAKE.push(head);
     GAME_BOARD[SNAKE[0].boardIndex].color = 'transparent';
     SNAKE.shift();
 }
 
-function turnSnakeRightIfGoVertical(){
-    if( canTurnRightIfGoVertical() ){
-        turnRightIfGoVertical();
+function turnRightSnakeIfStepVertical(){
+    if( canTurnRightIfStepVertical() ){
+        turnRightIfStepVertical();
         addSnakeToGameBoard();
     }
 }
-function canTurnRightIfGoVertical(){
+function canTurnRightIfStepVertical(){
 const headIndex = SNAKE.length - 1;
 const snakeHead = SNAKE[headIndex];
+    if(snakeHead.direction === NORTH && snakeHead.col + 1 < BOARD_COLUMN){
+    return true;
+    }
+    else if(snakeHead.direction === SOUTH && snakeHead.col - 1 > 0){
+    return true;
+    }
 return false;
 }
-function turnRightIfGoVertical(){
+function turnRightIfStepVertical(){
     const headIndex = SNAKE.length - 1;
     const snakeHead = SNAKE[headIndex];
     SNAKE[headIndex].color = YELLOW;
     let head;
-
+    if(snakeHead.direction === NORTH){
+        head = new BoardComponent(snakeHead.row, snakeHead.col + 1, RED, EAST);
+    }
+    else if(snakeHead.direction === SOUTH){
+        head = new BoardComponent(snakeHead.row, snakeHead.col - 1, RED, WEST);
+    }
     SNAKE.push(head);
     GAME_BOARD[SNAKE[0].boardIndex].color = 'transparent';
     SNAKE.shift();
@@ -226,7 +248,7 @@ function isBranch(){
 }
 
 export { GAME_BOARD, stepSnake, 
-    turnLeftIfGoHorizontal, turnRightIfGoHorizontal, 
-    turnSnakeLeftIfGoVertical, turnRightIfGoVertical };
+    turnLeftSnakeIfStepHorizontal, turnRightSnakeIfStepHorizontal, 
+    turnLeftSnakeIfStepVertical, turnRightSnakeIfStepVertical };
 
 

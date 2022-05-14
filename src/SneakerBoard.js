@@ -1,24 +1,42 @@
 import { GAME_BOARD, stepSnake, 
-    turnLeftIfGoHorizontal, turnRightIfGoHorizontal, 
-    turnSnakeLeftIfGoVertical, turnRightIfGoVertical } from './SneakerLogic';
+    turnLeftSnakeIfStepHorizontal, turnRightSnakeIfStepHorizontal, 
+    turnLeftSnakeIfStepVertical, turnRightSnakeIfStepVertical } from './SneakerLogic';
 import upArrow from './icons/up.jpg';
 import downArrow from './icons/down.jpg';
 import leftArrow from './icons/left.jpg';
 import rightArrow from './icons/right.jpg';
 import { useState, useEffect } from 'react';
-
+  
 function SneakerBoard(props){
 const[gameBoard, setGameBoard] = useState(GAME_BOARD);
 
     useEffect(() => {
         setTimeout(() => {
-            step();
-            setGameBoard(() => [...GAME_BOARD]);
+            stepSnake();
+            setGameBoard(() => [...GAME_BOARD])
     }, 1000);
   });
 
-    const step = () => {stepSnake(); setGameBoard(() => [...GAME_BOARD])}
-    
+  useEffect(() => {
+    window.addEventListener('keydown', handleKeyPress);
+ },[]);
+
+  const handleKeyPress = (event) => {
+
+    if(event.key === 'ArrowLeft'){
+     console.log('west');
+    }
+    else if(event.key === 'ArrowUp'){
+    console.log('north');
+    }
+    else if(event.key === 'ArrowRight'){
+     console.log('east');
+    }
+    else if(event.key === 'ArrowDown'){
+    console.log('south');
+    }
+}
+  
     return(<div className='Sneaker-Board'>
         <img src={props.image} alt='Nice-tree'></img>
         <SnakerBoardFields board={gameBoard}/>
@@ -44,9 +62,10 @@ function SnakerBoardFields(props){
 }
 
 function SnakeNavigationButtons(props){
+
 return(<div className='Navigation-btn'>
 <div className='Up-btn'>
-<button id='up-btn' style={{backgroundImage : props.up}} onClick={props.onClick}></button>
+<button id='up-btn' style={{backgroundImage : props.up}}></button>
 </div>
 <div>
 <button id='left-btn' style={{backgroundImage : props.left}}></button>

@@ -1,6 +1,6 @@
 import { BOARD_COLUMN } from "./Constans";
 
-function SnakeComponent(rowIndex, colIndex, color, direction){
+function BoardComponent(rowIndex, colIndex, color, direction){
   this.row = rowIndex;
   this.col = colIndex;
   this.boardIndex = calcBoardIndex(this.row, this.col);
@@ -12,4 +12,4 @@ function calcBoardIndex(rowindex, colindex){
 return rowindex * BOARD_COLUMN + colindex;
 }
 
-export { SnakeComponent };
+export { BoardComponent };
