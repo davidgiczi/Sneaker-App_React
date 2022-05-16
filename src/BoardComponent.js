@@ -1,11 +1,12 @@
 import { BOARD_COLUMN } from "./Constans";
 
-function BoardComponent(rowIndex, colIndex, color, direction){
+function BoardComponent(rowIndex, colIndex, color, direction, type){
   this.row = rowIndex;
   this.col = colIndex;
   this.boardIndex = calcBoardIndex(this.row, this.col);
   this.color = color;
   this.direction = direction;
+  this.type = type;
 }
 
 function calcBoardIndex(rowindex, colindex){

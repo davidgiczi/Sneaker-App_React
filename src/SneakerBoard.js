@@ -1,10 +1,11 @@
-import { GAME_BOARD, stepSnake, turnNorthSnakeIfStepHorizontal, turnSouthSnakeIfStepHorizontal,
+import { GAME_BOARD, SNAKE, stepSnake, turnNorthSnakeIfStepHorizontal, turnSouthSnakeIfStepHorizontal,
                                 turnWestSnakeIfStepVertical, turnEastSnakeIfStepVertical } from './SneakerLogic';
 import upArrow from './icons/up.jpg';
 import downArrow from './icons/down.jpg';
 import leftArrow from './icons/left.jpg';
 import rightArrow from './icons/right.jpg';
 import { useState, useEffect } from 'react';
+import { EAST, NORTH, SOUTH, WEST } from './Constans';
 let play;
 
 function SneakerBoard(props){
@@ -22,20 +23,27 @@ const[gameBoard, setGameBoard] = useState(GAME_BOARD);
  },[]);
 
   const handleKeyPress = (event) => {
+    const snakeHead = SNAKE[SNAKE.length - 1];
+    if(event.key === 'ArrowLeft' && (snakeHead.direction === NORTH || snakeHead.direction === SOUTH)){
     clearTimeout(play);
-    if(event.key === 'ArrowLeft'){
     turnWestSnakeIfStepVertical();
-    }
-    else if(event.key === 'ArrowUp'){
-    turnNorthSnakeIfStepHorizontal();
-    }
-    else if(event.key === 'ArrowRight'){
-    turnEastSnakeIfStepVertical();
-    }
-    else if(event.key === 'ArrowDown'){
-    turnSouthSnakeIfStepHorizontal();
-    }
     setGameBoard(() => [...GAME_BOARD])
+    }
+    else if(event.key === 'ArrowUp' && (snakeHead.direction === EAST || snakeHead.direction === WEST)){
+    clearTimeout(play);
+    turnNorthSnakeIfStepHorizontal();
+    setGameBoard(() => [...GAME_BOARD])
+    }
+    else if(event.key === 'ArrowRight'&& (snakeHead.direction === NORTH || snakeHead.direction === SOUTH)){
+    clearTimeout(play);
+    turnEastSnakeIfStepVertical();
+    setGameBoard(() => [...GAME_BOARD])
+    }
+    else if(event.key === 'ArrowDown' && (snakeHead.direction === EAST || snakeHead.direction === WEST)){
+    clearTimeout(play);
+    turnSouthSnakeIfStepHorizontal();
+    setGameBoard(() => [...GAME_BOARD])
+    }
 }
 
     const handleUpButtonPress = () => {
