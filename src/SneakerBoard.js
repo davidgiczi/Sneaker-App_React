@@ -6,7 +6,7 @@ import leftArrow from './icons/left.jpg';
 import rightArrow from './icons/right.jpg';
 import { useState, useEffect } from 'react';
 let play;
-  
+
 function SneakerBoard(props){
 const[gameBoard, setGameBoard] = useState(GAME_BOARD);
    
@@ -37,7 +37,28 @@ const[gameBoard, setGameBoard] = useState(GAME_BOARD);
     }
     setGameBoard(() => [...GAME_BOARD])
 }
-  
+
+    const handleUpButtonPress = () => {
+        clearTimeout(play);
+        turnNorthSnakeIfStepHorizontal();
+        setGameBoard(() => [...GAME_BOARD])
+    }
+    const handleLeftButtonPress = () => {
+        clearTimeout(play);
+        turnWestSnakeIfStepVertical();
+        setGameBoard(() => [...GAME_BOARD])
+    }
+    const handleRightButtonPress = () => {
+        clearTimeout(play);
+        turnEastSnakeIfStepVertical();
+        setGameBoard(() => [...GAME_BOARD])
+    }
+    const handleDownButtonPress = () => {
+        clearTimeout(play);
+        turnSouthSnakeIfStepHorizontal();
+        setGameBoard(() => [...GAME_BOARD])
+    }
+
     return(<div className='Sneaker-Board'>
         <img src={props.image} alt='Nice-tree'></img>
         <SnakerBoardFields board={gameBoard}/>
@@ -46,7 +67,10 @@ const[gameBoard, setGameBoard] = useState(GAME_BOARD);
         down = {'url(' +  downArrow + ')' }
         left = {'url(' +  leftArrow + ')' }
         right = {'url(' +  rightArrow + ')' }
-        onClick={() => alert('Hi Dave!')}
+        upBtn = {handleUpButtonPress}
+        leftBtn = {handleLeftButtonPress}
+        rightBtn = {handleRightButtonPress}
+        downBtn = {handleDownButtonPress}
         />
     </div>)
 }
@@ -67,16 +91,17 @@ function SnakeNavigationButtons(props){
 
 return(<div className='Navigation-btn'>
 <div className='Up-btn'>
-<button id='up-btn' style={{backgroundImage : props.up}} onClick={props.onClick}></button>
+<button id='up-btn' style={{backgroundImage : props.up}} onClick={props.upBtn}></button>
 </div>
 <div>
-<button id='left-btn' style={{backgroundImage : props.left}}  onClick={props.onClick}></button>
-<button id='right-btn' style={{backgroundImage : props.right}}  onClick={props.onClick}></button>
+<button id='left-btn' style={{backgroundImage : props.left}} onClick={props.leftBtn}></button>
+<button id='right-btn' style={{backgroundImage : props.right}} onClick={props.rightBtn}></button>
 </div>
-<div>
-<button id='down-btn' style={{backgroundImage : props.down}}  onClick={props.onClick}></button>
+<div> 
+<button id='down-btn' style={{backgroundImage : props.down}} onClick={props.downBtn}></button>
 </div>
 </div>);
 }
+
 
 export default SneakerBoard;
