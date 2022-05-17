@@ -3,6 +3,8 @@ import { BOARD_SIZE, YELLOW, RED, GREEN, BROWN, LEFT, RIGHT, NORTH, EAST,
      SOUTH, WEST, BOARD_COLUMN, BOARD_ROW, NUMBER_OF_LEAF, NUMBER_OF_BRANCH,
      HEAD, BODY, LEAF, BRANCH } from './Constans';
 const SNAKE = [];
+const BRANCH_STORE = [];
+const LEAF_STORE = [];
 let boardField = {
             id: null,
             color: null,
@@ -17,7 +19,11 @@ initGame();
 function initGame(){
     createGameBoard();
     createSnake();
-    addBoardComponentToGameBoard();
+    addSnakeComponentToGameBoard();
+    createBranchComponents();
+    addBranchComponentsToGameBoard();
+    createLeafComponents();
+    addLeafComponentsToGameBoard();
 }
 function createGameBoard(){
 
@@ -49,7 +55,7 @@ function createSnake(){
     SNAKE.push(snakeHead);
 }
 
-function addBoardComponentToGameBoard(){
+function addSnakeComponentToGameBoard(){
 for(let i = 0; i < SNAKE.length; i++){
     GAME_BOARD[SNAKE[i].boardIndex].color = SNAKE[i].color;
 }
@@ -58,7 +64,7 @@ for(let i = 0; i < SNAKE.length; i++){
 function stepSnake(){
     if( canStep() ){
         step();
-        addBoardComponentToGameBoard();
+        addSnakeComponentToGameBoard();
     }
 }
 
@@ -104,7 +110,7 @@ SNAKE.shift();
 function turnNorthSnakeIfStepHorizontal(){
 if( canTurnNorthIfStepHorizontal() ){
     turnNorthIfStepHorizontal();
-    addBoardComponentToGameBoard();
+    addSnakeComponentToGameBoard();
 }
 }
 
@@ -139,7 +145,7 @@ function turnNorthIfStepHorizontal(){
 function turnSouthSnakeIfStepHorizontal(){
     if( canTurnSouthIfStepHorizontal() ){
         turnSouthIfStepHorizontal();
-        addBoardComponentToGameBoard();
+        addSnakeComponentToGameBoard();
     }
 }
 
@@ -174,7 +180,7 @@ SNAKE.shift();
 function turnWestSnakeIfStepVertical(){
 if( canTurnWestIfStepVertical() ){
     turnWestIfStepVertical();
-    addBoardComponentToGameBoard();
+    addSnakeComponentToGameBoard();
 }
 }
 function canTurnWestIfStepVertical(){
@@ -207,7 +213,7 @@ function turnWestIfStepVertical(){
 function turnEastSnakeIfStepVertical(){
     if( canTurnEastIfStepVertical() ){
         turnEastIfStepVertical();
-        addBoardComponentToGameBoard();
+        addSnakeComponentToGameBoard();
     }
 }
 function canTurnEastIfStepVertical(){
@@ -235,6 +241,74 @@ function turnEastIfStepVertical(){
     SNAKE.push(head);
     GAME_BOARD[SNAKE[0].boardIndex].color = 'transparent';
     SNAKE.shift();
+}
+
+function createBranchComponents(){
+
+while(BRANCH_STORE.length !== NUMBER_OF_BRANCH){
+    let row = Math.floor(Math.random() * BOARD_ROW);
+    let col = Math.floor(Math.random() * BOARD_COLUMN);
+    if( isCorrectBranchComponent(row, col) ){
+        BRANCH_STORE.push(new BoardComponent(row, col, BROWN, null, BRANCH));
+        }
+    }
+}
+
+function isCorrectBranchComponent(rowValue, colValue){
+    const headIndex = SNAKE.length - 1;
+    const head = SNAKE[headIndex];
+   if(head.row === rowValue || head.col === colValue){
+    return false;
+   }
+   for(let i = 0; i < BRANCH_STORE.length; i++){
+        if(BRANCH_STORE[i].boardIndex === (rowValue * BOARD_COLUMN + colValue)){
+            return false;
+        }
+    }
+    return true;
+}
+
+function addBranchComponentsToGameBoard(){
+    for(let i = 0; i < BRANCH_STORE.length; i++){
+        GAME_BOARD[BRANCH_STORE[i].boardIndex].color = BRANCH_STORE[i].color;
+    }
+}
+
+function createLeafComponents(){
+    
+    while(LEAF_STORE.length !== NUMBER_OF_LEAF){
+    let row = Math.floor(Math.random() * BOARD_ROW);
+    let col = Math.floor(Math.random() * BOARD_COLUMN);
+    if( isCorrectLeafComponent(row, col) ){
+    LEAF_STORE.push(new BoardComponent(row, col, GREEN, null, LEAF));
+        }
+    }
+}
+
+function isCorrectLeafComponent(rowValue, colValue){
+    const headIndex = SNAKE.length - 1;
+    const head = SNAKE[headIndex];
+   if(head.row === rowValue || head.col === colValue){
+    return false;
+   }
+   for(let i = 0; i < BRANCH_STORE.length; i++){
+        if(BRANCH_STORE[i].boardIndex === (rowValue * BOARD_COLUMN + colValue)){
+            return false;
+        }
+    }
+    for(let i = 0; i < LEAF_STORE.length; i++){
+        if(LEAF_STORE[i].boardIndex === (rowValue * BOARD_COLUMN + colValue)){
+            return false;
+        }
+    }
+
+    return true;
+}
+
+function addLeafComponentsToGameBoard(){
+    for(let i = 0; i < LEAF_STORE.length; i++){
+        GAME_BOARD[LEAF_STORE[i].boardIndex].color = LEAF_STORE[i].color;
+    }
 }
 
 function isLeaf(){
