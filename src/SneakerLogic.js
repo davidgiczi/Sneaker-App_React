@@ -18,8 +18,8 @@ initGame();
 
 function initGame(){
     createGameBoard();
-    createSnake();
-    addSnakeComponentToGameBoard();
+    createSnakeComponents();
+    addSnakeComponentsToGameBoard();
     createBranchComponents();
     addBranchComponentsToGameBoard();
     createLeafComponents();
@@ -48,14 +48,14 @@ function createGameBoard(){
     }
 }
 
-function createSnake(){
+function createSnakeComponents(){
     const snakeBody = new BoardComponent(0, 0, YELLOW, null, BODY);
     const snakeHead = new BoardComponent(0, 1, RED, EAST, HEAD);
     SNAKE.push(snakeBody);
     SNAKE.push(snakeHead);
 }
 
-function addSnakeComponentToGameBoard(){
+function addSnakeComponentsToGameBoard(){
 for(let i = 0; i < SNAKE.length; i++){
     GAME_BOARD[SNAKE[i].boardIndex].color = SNAKE[i].color;
 }
@@ -64,7 +64,7 @@ for(let i = 0; i < SNAKE.length; i++){
 function stepSnake(){
     if( canStep() ){
         step();
-        addSnakeComponentToGameBoard();
+        addSnakeComponentsToGameBoard();
     }
 }
 
@@ -110,7 +110,7 @@ SNAKE.shift();
 function turnNorthSnakeIfStepHorizontal(){
 if( canTurnNorthIfStepHorizontal() ){
     turnNorthIfStepHorizontal();
-    addSnakeComponentToGameBoard();
+    addSnakeComponentsToGameBoard();
 }
 }
 
@@ -145,7 +145,7 @@ function turnNorthIfStepHorizontal(){
 function turnSouthSnakeIfStepHorizontal(){
     if( canTurnSouthIfStepHorizontal() ){
         turnSouthIfStepHorizontal();
-        addSnakeComponentToGameBoard();
+        addSnakeComponentsToGameBoard();
     }
 }
 
@@ -180,7 +180,7 @@ SNAKE.shift();
 function turnWestSnakeIfStepVertical(){
 if( canTurnWestIfStepVertical() ){
     turnWestIfStepVertical();
-    addSnakeComponentToGameBoard();
+    addSnakeComponentsToGameBoard();
 }
 }
 function canTurnWestIfStepVertical(){
@@ -213,7 +213,7 @@ function turnWestIfStepVertical(){
 function turnEastSnakeIfStepVertical(){
     if( canTurnEastIfStepVertical() ){
         turnEastIfStepVertical();
-        addSnakeComponentToGameBoard();
+        addSnakeComponentsToGameBoard();
     }
 }
 function canTurnEastIfStepVertical(){
