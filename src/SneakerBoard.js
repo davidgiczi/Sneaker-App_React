@@ -14,7 +14,7 @@ const[gameBoard, setGameBoard] = useState(GAME_BOARD);
     useEffect(() => {
    play = setTimeout(() => {
             stepSnake();
-            setGameBoard(() => [...GAME_BOARD])
+            setGameBoard(() => [...GAME_BOARD]);
     }, 1000);
   });
 
@@ -91,7 +91,7 @@ function SnakerBoardFields(props){
                                     borderRight: field.borderRight,
                                     borderBottom: field.borderBottom,
                                     borderLeft: field.borderLeft}} 
-                                    className='Board-Field'>{field.id}</div>)}
+                                    className='Board-Field'></div>)}
     </>);
 }
 
