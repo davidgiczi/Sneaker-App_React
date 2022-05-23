@@ -13,7 +13,9 @@ let boardField = {
             borderLeft: null
         }
 const GAME_BOARD = [];
-let isTheEndOfTheGame = false;
+let STOP_GAME = false;
+let SCORE = 0;
+let LEVEL = 1;
 initGame();
 
 function initGame(){
@@ -127,7 +129,7 @@ if( canTurnNorthIfStepHorizontal() ){
     turnNorthIfStepHorizontal();
     addSnakeComponentsToGameBoard();
 }
-else{
+else {
     theEndOfTheGame();
 }
 }
@@ -390,13 +392,16 @@ function isBitten(headBoardIndex){
 }
 
 function theEndOfTheGame(){
-   isTheEndOfTheGame =  window.confirm('Vége a játéknak!\nSzeretnél még egyet játszani?');
-    if( isTheEndOfTheGame ){
+   const newGame =  window.confirm('Vége a játéknak!\nSzeretnél még egyet játszani?');
+    if( newGame ){
     window.location.reload();
+    }
+    else {
+        STOP_GAME = true;
     }
 }
 
 export { GAME_BOARD, SNAKE,stepSnake, turnNorthSnakeIfStepHorizontal, turnSouthSnakeIfStepHorizontal, 
-                                turnWestSnakeIfStepVertical, turnEastSnakeIfStepVertical, isTheEndOfTheGame};
+                                turnWestSnakeIfStepVertical, turnEastSnakeIfStepVertical, STOP_GAME, SCORE };
 
 
