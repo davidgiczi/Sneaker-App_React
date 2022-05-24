@@ -13,7 +13,6 @@ let boardField = {
             borderLeft: null
         }
 let GAME_BOARD;
-let THE_END = false;
 let SCORE = 0;
 let LEVEL = 1;
 initGame();
@@ -340,11 +339,12 @@ function createLeafComponents(){
 }
 
 function isCorrectLeafComponent(rowValue, colValue){
-    const headIndex = SNAKE.length - 1;
-    const head = SNAKE[headIndex];
-   if(head.row === rowValue || head.col === colValue){
+   
+  for(let i = 0; i <SNAKE.length; i++){
+  if(SNAKE[i].row === rowValue && SNAKE[i].col === colValue){
     return false;
    }
+  }
    for(let i = 0; i < BRANCH_STORE.length; i++){
         if(BRANCH_STORE[i].boardIndex === (rowValue * BOARD_COLUMN + colValue)){
             return false;
@@ -399,6 +399,6 @@ function theEndOfTheGame(){
 }
 
 export { GAME_BOARD, SNAKE,stepSnake, turnNorthSnakeIfStepHorizontal, turnSouthSnakeIfStepHorizontal, 
-                                turnWestSnakeIfStepVertical, turnEastSnakeIfStepVertical, SCORE };
+                                turnWestSnakeIfStepVertical, turnEastSnakeIfStepVertical, SCORE, LEVEL };
 
 

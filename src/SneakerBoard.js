@@ -1,4 +1,4 @@
-import { GAME_BOARD, SNAKE, stepSnake, turnNorthSnakeIfStepHorizontal, turnSouthSnakeIfStepHorizontal,
+import { GAME_BOARD, SNAKE, SCORE, LEVEL, stepSnake, turnNorthSnakeIfStepHorizontal, turnSouthSnakeIfStepHorizontal,
                                 turnWestSnakeIfStepVertical, turnEastSnakeIfStepVertical } from './SneakerLogic';
 import upArrow from './icons/up.jpg';
 import downArrow from './icons/down.jpg';
@@ -10,13 +10,16 @@ let playGame;
 
 function SneakerResult(props){
     return(<div className='Result-displayer'>
-        <font>{props.level} <font className='Result-text'>szint,</font> {props.score} <font className='Result-text'>pont</font></font></div>)
+        <font>{props.level}.<font className='Result-text'> szint,</font> {props.score}. 
+        <font className='Result-text'> pont</font></font></div>)
 }
 
 function SneakerBoard(props){
 const[gameBoard, setGameBoard] = useState(GAME_BOARD);
 const[stopGame, setStopGame] = useState(true);
 const[buttonText, setButtonText] = useState('Start');
+const[score, setScore] = useState(SCORE);
+const[level, setLevel] = useState(LEVEL);
    
   useEffect(() => {
     if(stopGame){
@@ -117,7 +120,7 @@ const[buttonText, setButtonText] = useState('Start');
     }
 
     return(<div className='Sneaker-board'>
-    <SneakerResult/>
+    <SneakerResult level={level} score={score}/>
     <img src={props.image} alt='Nice-tree'></img>
     <SnakerBoardFields board={gameBoard}/>
     <SnakeNavigationButtons className='Navigation-btn' 
