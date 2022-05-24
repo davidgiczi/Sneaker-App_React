@@ -3,10 +3,11 @@ import SneakerBoard from './SneakerBoard';
 import tree from './image/tree.jpg';
 
 function App() {
-  return (
+  return (<>
     <div className='Sneaker-App'>
-  <SneakerBoard image = { tree }/>
+  <SneakerBoard image = {tree}/>
     </div>
+    </>
   );
 }
 

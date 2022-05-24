@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Bungee+Inline&family=Coustard&family=Monoton&display=swap');
 @media (max-width: 800px) {
 
   .Sneaker-App {
@@ -22,7 +23,7 @@
   }
 
   .Up-btn{
-    margin-top: 50px;
+    margin-top: 30px;
   }
 #left-btn {
   margin-right: 80px;
@@ -30,6 +31,18 @@
 #right-btn {
   margin-left: 80px;
 }
+#startStop-btn{
+  margin-bottom: 40px;
+  height: 50px;
+  border-radius: 10px;
+  color: white;
+  background-color: red;
+  font-size: 20px;
+  font-weight: bold;
+  font-family: Coustard, serif;
+  cursor: pointer;
+}
+
 }
 
 @media (min-width: 800px) {
@@ -41,7 +54,7 @@
     }
 }
 
-.Sneaker-Board{
+.Sneaker-board{
   z-index: 1;
  display: flex;
  flex-direction: row;
@@ -49,10 +62,9 @@
  justify-content: center;
  height: 600px;
  width: 640px;
- border: 1px solid red;
 }
 
-.Board-Field{
+.Board-field{
   position: relative;
   z-index: 1;
   height: 40px;
@@ -68,4 +80,19 @@ img {
   height: 100%;
 }
 
+.Result-displayer{
+display: flex;
+width: 600px;
+font-family: Coustard, serif;
+justify-content: center;
+z-index: 1;
+color: red;
+}
+.Result-text{
+  color: white;
+}
 
+font {
+  font-size: 40px;
+  color: red;
+}

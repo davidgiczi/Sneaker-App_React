@@ -1,9 +1,9 @@
 import { BoardComponent } from './BoardComponent';
 import { BOARD_SIZE, YELLOW, RED, GREEN, BROWN, NORTH, EAST,
      SOUTH, WEST, BOARD_COLUMN, BOARD_ROW, NUMBER_OF_LEAF, NUMBER_OF_BRANCH } from './Constans';
-const SNAKE = [];
-const BRANCH_STORE = [];
-const LEAF_STORE = [];
+let SNAKE;
+let BRANCH_STORE;
+let LEAF_STORE;
 let boardField = {
             id: null,
             color: null,
@@ -12,8 +12,8 @@ let boardField = {
             borderBottom: null,
             borderLeft: null
         }
-const GAME_BOARD = [];
-let STOP_GAME = false;
+let GAME_BOARD;
+let THE_END = false;
 let SCORE = 0;
 let LEVEL = 1;
 initGame();
@@ -28,7 +28,7 @@ function initGame(){
     addLeafComponentsToGameBoard();
 }
 function createGameBoard(){
-
+    GAME_BOARD = [];
     for(let i =  0; i < BOARD_SIZE; i++){
 
         boardField = {};
@@ -51,6 +51,7 @@ function createGameBoard(){
 }
 
 function createSnakeComponents(){
+    SNAKE = [];
     const snakeBody = new BoardComponent(0, 0, YELLOW, null);
     const snakeHead = new BoardComponent(0, 1, RED, EAST);
     SNAKE.push(snakeBody);
@@ -297,7 +298,7 @@ function turnEastIfStepVertical(){
 }
 
 function createBranchComponents(){
-
+BRANCH_STORE = [];
 while(BRANCH_STORE.length !== NUMBER_OF_BRANCH){
     let row = Math.floor(Math.random() * BOARD_ROW);
     let col = Math.floor(Math.random() * BOARD_COLUMN);
@@ -328,7 +329,7 @@ function addBranchComponentsToGameBoard(){
 }
 
 function createLeafComponents(){
-    
+    LEAF_STORE = [];
     while(LEAF_STORE.length !== NUMBER_OF_LEAF){
     let row = Math.floor(Math.random() * BOARD_ROW);
     let col = Math.floor(Math.random() * BOARD_COLUMN);
@@ -392,16 +393,12 @@ function isBitten(headBoardIndex){
 }
 
 function theEndOfTheGame(){
-   const newGame =  window.confirm('Vége a játéknak!\nSzeretnél még egyet játszani?');
-    if( newGame ){
-    window.location.reload();
-    }
-    else {
-        STOP_GAME = true;
-    }
+   alert('Vége a játéknak!\nSzeretnél még egyet játszani?');
+   initGame();
+   window.location.reload();
 }
 
 export { GAME_BOARD, SNAKE,stepSnake, turnNorthSnakeIfStepHorizontal, turnSouthSnakeIfStepHorizontal, 
-                                turnWestSnakeIfStepVertical, turnEastSnakeIfStepVertical, STOP_GAME, SCORE };
+                                turnWestSnakeIfStepVertical, turnEastSnakeIfStepVertical, SCORE };
 
 

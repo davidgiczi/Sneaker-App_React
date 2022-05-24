@@ -1,5 +1,5 @@
 import { GAME_BOARD, SNAKE, stepSnake, turnNorthSnakeIfStepHorizontal, turnSouthSnakeIfStepHorizontal,
-                                turnWestSnakeIfStepVertical, turnEastSnakeIfStepVertical, STOP_GAME } from './SneakerLogic';
+                                turnWestSnakeIfStepVertical, turnEastSnakeIfStepVertical } from './SneakerLogic';
 import upArrow from './icons/up.jpg';
 import downArrow from './icons/down.jpg';
 import leftArrow from './icons/left.jpg';
@@ -8,15 +8,22 @@ import { useState, useEffect } from 'react';
 import { EAST, NORTH, SOUTH, WEST } from './Constans';
 let playGame;
 
+function SneakerResult(props){
+    return(<div className='Result-displayer'>
+        <font>{props.level} <font className='Result-text'>szint,</font> {props.score} <font className='Result-text'>pont</font></font></div>)
+}
 
 function SneakerBoard(props){
 const[gameBoard, setGameBoard] = useState(GAME_BOARD);
+const[stopGame, setStopGame] = useState(true);
+const[buttonText, setButtonText] = useState('Start');
    
-    useEffect(() => {
-   playGame = setTimeout(play, 1000);
-   if( STOP_GAME ){
+  useEffect(() => {
+    if(stopGame){
     clearTimeout(playGame);
-   }
+    return;
+    }
+  playGame = setTimeout(play, 500);
   });
 
   const play = () => {
@@ -29,10 +36,6 @@ const[gameBoard, setGameBoard] = useState(GAME_BOARD);
  });
 
   const handleKeyPress = (event) => {
-    if( STOP_GAME ){
-        clearTimeout(playGame);
-        return;
-       }
     const snakeHead = SNAKE[SNAKE.length - 1];
     if(event.key === 'ArrowLeft' && (snakeHead.direction === NORTH || snakeHead.direction === SOUTH)){
     clearTimeout(playGame);
@@ -54,49 +57,70 @@ const[gameBoard, setGameBoard] = useState(GAME_BOARD);
     turnSouthSnakeIfStepHorizontal();
     setGameBoard(() => [...GAME_BOARD]);
     }
+    else if(event.key === 'Enter'){
+    clearTimeout(playGame);
+    setStopGame(!stopGame);
+    }
 }
 
     const handleUpButtonPress = () => {
-        if( STOP_GAME ){
+        if( stopGame ){
             clearTimeout(playGame);
             return;
            }
+        const snakeHead = SNAKE[SNAKE.length - 1];
+        if(snakeHead.direction === EAST || snakeHead.direction === WEST){
         clearTimeout(playGame);
         turnNorthSnakeIfStepHorizontal();
         setGameBoard(() => [...GAME_BOARD])
+        }
     }
     const handleLeftButtonPress = () => {
-        if( STOP_GAME ){
+        if( stopGame ){
             clearTimeout(playGame);
             return;
            }
+        const snakeHead = SNAKE[SNAKE.length - 1];
+        if(snakeHead.direction === NORTH || snakeHead.direction === SOUTH){
         clearTimeout(playGame);
         turnWestSnakeIfStepVertical();
         setGameBoard(() => [...GAME_BOARD])
+        }
     }
     const handleRightButtonPress = () => {
-        if( STOP_GAME ){
+        if( stopGame ){
             clearTimeout(playGame);
             return;
            }
+        const snakeHead = SNAKE[SNAKE.length - 1];
+        if(snakeHead.direction === NORTH || snakeHead.direction === SOUTH){
         clearTimeout(playGame);
         turnEastSnakeIfStepVertical();
         setGameBoard(() => [...GAME_BOARD])
+        }
     }
     const handleDownButtonPress = () => {
-        if( STOP_GAME ){
+        if( stopGame ){
             clearTimeout(playGame);
             return;
            }
+        const snakeHead = SNAKE[SNAKE.length - 1];
+        if(snakeHead.direction === EAST || snakeHead.direction === WEST){
         clearTimeout(playGame);
         turnSouthSnakeIfStepHorizontal();
         setGameBoard(() => [...GAME_BOARD])
+        }
+    }
+    const handleStartStopButtonPress = () => {
+        setButtonText(() => buttonText === 'Start' ? 'Stop' : 'Start');
+        setStopGame(!stopGame);
     }
 
-    return(<div className='Sneaker-Board'>
+    return(<div className='Sneaker-board'>
+    <SneakerResult/>
     <img src={props.image} alt='Nice-tree'></img>
     <SnakerBoardFields board={gameBoard}/>
-    <SnakeNavigationButtons className='Navigation-Button' 
+    <SnakeNavigationButtons className='Navigation-btn' 
     up = {'url(' +  upArrow + ')' }
     down = {'url(' +  downArrow + ')' }
     left = {'url(' +  leftArrow + ')' }
@@ -105,6 +129,8 @@ const[gameBoard, setGameBoard] = useState(GAME_BOARD);
     leftBtn = {handleLeftButtonPress}
     rightBtn = {handleRightButtonPress}
     downBtn = {handleDownButtonPress}
+    middleBtn = {handleStartStopButtonPress}
+    text = {buttonText}
     />
 </div>)
 }
@@ -117,7 +143,7 @@ function SnakerBoardFields(props){
                                     borderRight: field.borderRight,
                                     borderBottom: field.borderBottom,
                                     borderLeft: field.borderLeft}} 
-                                    className='Board-Field'></div>)}
+                                    className='Board-field'></div>)}
     </>);
 }
 
@@ -129,6 +155,7 @@ return(<div className='Navigation-btn'>
 </div>
 <div>
 <button id='left-btn' style={{backgroundImage : props.left}} onClick={props.leftBtn}></button>
+<button id='startStop-btn' onClick={props.middleBtn}>{props.text}</button>
 <button id='right-btn' style={{backgroundImage : props.right}} onClick={props.rightBtn}></button>
 </div>
 <div> 
