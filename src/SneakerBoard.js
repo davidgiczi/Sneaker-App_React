@@ -1,5 +1,7 @@
-import { GAME_BOARD, SNAKE, SCORE, LEVEL, stepSnake, turnNorthSnakeIfStepHorizontal, turnSouthSnakeIfStepHorizontal,
-                                turnWestSnakeIfStepVertical, turnEastSnakeIfStepVertical } from './SneakerLogic';
+import { GAME_BOARD, SNAKE, SCORE, LEVEL, LEAF_STORE, SPEED, 
+    stepSnake, turnNorthSnakeIfStepHorizontal, turnSouthSnakeIfStepHorizontal,
+    turnWestSnakeIfStepVertical, turnEastSnakeIfStepVertical, createNextLevelBoard, 
+    calcLevel, calcSpeed } from './SneakerLogic';
 import upArrow from './icons/up.jpg';
 import downArrow from './icons/down.jpg';
 import leftArrow from './icons/left.jpg';
@@ -10,7 +12,7 @@ let playGame;
 
 function SneakerResult(props){
     return(<div className='Result-displayer'>
-        <font>{props.level}.<font className='Result-text'> szint,</font> {props.score}. 
+        <font>{props.level}<font className='Result-text'> szint,</font> {props.score} 
         <font className='Result-text'> pont</font></font></div>)
 }
 
@@ -26,10 +28,19 @@ const[level, setLevel] = useState(LEVEL);
     clearTimeout(playGame);
     return;
     }
-  playGame = setTimeout(play, 500);
+  playGame = setTimeout(play, SPEED);
   });
 
   const play = () => {
+    calcLevel();
+    setLevel(LEVEL);
+    setScore(SCORE);
+    if(LEAF_STORE.length === 0){
+        calcSpeed();
+        createNextLevelBoard();
+        setGameBoard(() => [...GAME_BOARD]);
+        return;
+    }
     stepSnake();
     setGameBoard(() => [...GAME_BOARD]);
   }
