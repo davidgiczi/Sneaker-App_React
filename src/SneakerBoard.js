@@ -2,13 +2,14 @@ import { GAME_BOARD, SNAKE, SCORE, LEVEL, LEAF_STORE, SPEED,
     stepSnake, turnNorthSnakeIfStepHorizontal, turnSouthSnakeIfStepHorizontal,
     turnWestSnakeIfStepVertical, turnEastSnakeIfStepVertical, createNextLevelBoard, 
     calcLevel, calcSpeed } from './SneakerLogic';
-import upArrow from './icons/up.jpg';
-import downArrow from './icons/down.jpg';
-import leftArrow from './icons/left.jpg';
-import rightArrow from './icons/right.jpg';
 import { useState, useEffect } from 'react';
 import { EAST, NORTH, SOUTH, WEST } from './Constans';
 let playGame;
+
+
+function TheEndOfTheGameDisplayer(props){
+    return(<div className='The-end'>{props.text}<font></font></div>)
+}
 
 function SneakerResult(props){
     return(<div className='Result-displayer'>
@@ -22,6 +23,7 @@ const[stopGame, setStopGame] = useState(true);
 const[buttonText, setButtonText] = useState('Start');
 const[score, setScore] = useState(SCORE);
 const[level, setLevel] = useState(LEVEL);
+const[theEnd, setTheEnd] = useState();
    
   useEffect(() => {
     if(stopGame){
@@ -131,14 +133,15 @@ const[level, setLevel] = useState(LEVEL);
     }
 
     return(<div className='Sneaker-board'>
+    <TheEndOfTheGameDisplayer text={theEnd}/>
     <SneakerResult level={level} score={score}/>
     <img src={props.image} alt='Nice-tree'></img>
     <SnakerBoardFields board={gameBoard}/>
     <SnakeNavigationButtons className='Navigation-btn' 
-    up = {'url(' +  upArrow + ')' }
-    down = {'url(' +  downArrow + ')' }
-    left = {'url(' +  leftArrow + ')' }
-    right = {'url(' +  rightArrow + ')' }
+    up = 'Fel'
+    down = 'Le'
+    left = 'Balra'
+    right = 'Jobbra'
     upBtn = {handleUpButtonPress}
     leftBtn = {handleLeftButtonPress}
     rightBtn = {handleRightButtonPress}
@@ -165,15 +168,15 @@ function SnakeNavigationButtons(props){
 
 return(<div className='Navigation-btn'>
 <div className='Up-btn'>
-<button id='up-btn' style={{backgroundImage : props.up}} onClick={props.upBtn}></button>
+<button id='up-btn' onClick={props.upBtn}>{props.up}</button>
 </div>
 <div>
-<button id='left-btn' style={{backgroundImage : props.left}} onClick={props.leftBtn}></button>
+<button id='left-btn' onClick={props.leftBtn}>{props.left}</button>
 <button id='startStop-btn' onClick={props.middleBtn}>{props.text}</button>
-<button id='right-btn' style={{backgroundImage : props.right}} onClick={props.rightBtn}></button>
+<button id='right-btn' onClick={props.rightBtn}>{props.right}</button>
 </div>
 <div> 
-<button id='down-btn' style={{backgroundImage : props.down}} onClick={props.downBtn}></button>
+<button id='down-btn' onClick={props.downBtn}>{props.down}</button>
 </div>
 </div>);
 }

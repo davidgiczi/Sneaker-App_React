@@ -12,32 +12,37 @@
   }
 
   button {
-    height: 70px;
-    width: 70px;
+    height: 120px;
+    width: 180px;
     background-repeat: no-repeat;
     background-position: center;
     background-size: 80px 70px;
+    background-color: #f95151;
+    font-family: Coustard, serif;
+    font-weight: bold;
+    color: white;
+    font-size: 30px;
     border-radius: 40px;
     border: none;
     cursor: pointer;
   }
 
   .Up-btn{
-    margin-top: 30px;
+    margin-top: 20px;
   }
 #left-btn {
-  margin-right: 80px;
+  margin-right: 40px;
 }
 #right-btn {
-  margin-left: 80px;
+  margin-left: 40px;
 }
 #startStop-btn{
-  margin-bottom: 40px;
-  height: 50px;
-  border-radius: 10px;
+  margin-bottom: 10px;
+  height: 100px;
+  border-radius: 20px;
   color: white;
-  background-color: red;
-  font-size: 20px;
+  background-color: #f95151;
+  font-size: 30px;
   font-weight: bold;
   font-family: Coustard, serif;
   cursor: pointer;
@@ -84,15 +89,32 @@ img {
 display: flex;
 width: 600px;
 font-family: Coustard, serif;
+font-weight: bold;
 justify-content: center;
 z-index: 1;
-color: red;
+color: #f95151;
 }
 .Result-text{
   color: white;
 }
+.The-end{
+  display: flex;
+  width: 600px;
+  font-family: Coustard, serif;
+  font-weight: bold;
+  justify-content: center;
+  z-index: 1;
+  color: #f95151;
+  animation: blinker 1s linear infinite;
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}
 
 font {
   font-size: 40px;
-  color: red;
+  color: #f95151;
 }
