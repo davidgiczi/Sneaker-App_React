@@ -1,4 +1,4 @@
-import { GAME_BOARD, SNAKE, SCORE, LEVEL, LEAF_STORE, SPEED, 
+import { GAME_BOARD, SNAKE, SCORE, LEVEL, LEAF_STORE, SPEED, THE_END_OF_THE_GAME,
     stepSnake, turnNorthSnakeIfStepHorizontal, turnSouthSnakeIfStepHorizontal,
     turnWestSnakeIfStepVertical, turnEastSnakeIfStepVertical, createNextLevelBoard, 
     calcLevel, calcSpeed } from './SneakerLogic';
@@ -8,7 +8,7 @@ let playGame;
 
 
 function TheEndOfTheGameDisplayer(props){
-    return(<div className='The-end'>{props.text}<font></font></div>)
+    return(<div className='The-end' style={{color : props.color}}>VÉGE A JÁTÉKNAK!<font></font></div>)
 }
 
 function SneakerResult(props){
@@ -19,32 +19,27 @@ function SneakerResult(props){
 
 function SneakerBoard(props){
 const[gameBoard, setGameBoard] = useState(GAME_BOARD);
-const[stopGame, setStopGame] = useState(true);
+const[STOP_GAME, setStopGame] = useState(true);
 const[buttonText, setButtonText] = useState('Start');
 const[score, setScore] = useState(SCORE);
 const[level, setLevel] = useState(LEVEL);
-const[theEnd, setTheEnd] = useState();
+const[theEndOfTheGameBackground, setTheEndOfTheGameBackground] = useState('transparent');
    
   useEffect(() => {
-    if(stopGame){
-    clearTimeout(playGame);
-    return;
-    }
   playGame = setTimeout(play, SPEED);
   });
 
   const play = () => {
-    calcLevel();
-    setLevel(LEVEL);
-    setScore(SCORE);
-    if(LEAF_STORE.length === 0){
-        calcSpeed();
-        createNextLevelBoard();
-        setGameBoard(() => [...GAME_BOARD]);
-        return;
+    if( STOP_GAME ){
+    clearTimeout(playGame);
     }
+    else if( THE_END_OF_THE_GAME ){
+    setTheEndOfTheGameBackground('#f95151');
+    }
+    else {
     stepSnake();
     setGameBoard(() => [...GAME_BOARD]);
+    }
   }
 
   useEffect(() => {
@@ -75,12 +70,12 @@ const[theEnd, setTheEnd] = useState();
     }
     else if(event.key === 'Enter'){
     clearTimeout(playGame);
-    setStopGame(!stopGame);
+    setStopGame( !STOP_GAME );
     }
 }
 
     const handleUpButtonPress = () => {
-        if( stopGame ){
+        if( STOP_GAME ){
             clearTimeout(playGame);
             return;
            }
@@ -92,7 +87,7 @@ const[theEnd, setTheEnd] = useState();
         }
     }
     const handleLeftButtonPress = () => {
-        if( stopGame ){
+        if( STOP_GAME ){
             clearTimeout(playGame);
             return;
            }
@@ -104,7 +99,7 @@ const[theEnd, setTheEnd] = useState();
         }
     }
     const handleRightButtonPress = () => {
-        if( stopGame ){
+        if( STOP_GAME ){
             clearTimeout(playGame);
             return;
            }
@@ -116,7 +111,7 @@ const[theEnd, setTheEnd] = useState();
         }
     }
     const handleDownButtonPress = () => {
-        if( stopGame ){
+        if( STOP_GAME ){
             clearTimeout(playGame);
             return;
            }
@@ -129,11 +124,11 @@ const[theEnd, setTheEnd] = useState();
     }
     const handleStartStopButtonPress = () => {
         setButtonText(() => buttonText === 'Start' ? 'Stop' : 'Start');
-        setStopGame(!stopGame);
+        setStopGame( !STOP_GAME );
     }
 
     return(<div className='Sneaker-board'>
-    <TheEndOfTheGameDisplayer text={theEnd}/>
+    <TheEndOfTheGameDisplayer color={theEndOfTheGameBackground}/>
     <SneakerResult level={level} score={score}/>
     <img src={props.image} alt='Nice-tree'></img>
     <SnakerBoardFields board={gameBoard}/>

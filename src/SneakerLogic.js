@@ -17,6 +17,7 @@ let GAME_BOARD;
 let SCORE = 0;
 let LEVEL = 'I.'
 let SPEED = 500;
+let THE_END_OF_THE_GAME = false;
 initGame();
 
 function initGame(){
@@ -73,7 +74,7 @@ function stepSnake(){
         addSnakeComponentsToGameBoard();
     }
     else {
-        theEndOfTheGame();
+        THE_END_OF_THE_GAME = true;
     }
 }
 
@@ -137,7 +138,7 @@ if( canTurnNorthIfStepHorizontal() ){
     addSnakeComponentsToGameBoard();
 }
 else {
-    theEndOfTheGame();
+    THE_END_OF_THE_GAME = true;
 }
 }
 
@@ -184,7 +185,7 @@ function turnSouthSnakeIfStepHorizontal(){
         addSnakeComponentsToGameBoard();
     }
     else {
-        theEndOfTheGame();
+        THE_END_OF_THE_GAME = true;
     }
 }
 
@@ -231,7 +232,7 @@ if( canTurnWestIfStepVertical() ){
     addSnakeComponentsToGameBoard();
 }
 else {
-    theEndOfTheGame();
+   THE_END_OF_THE_GAME = true;
 }
 }
 function canTurnWestIfStepVertical(){
@@ -276,7 +277,7 @@ function turnEastSnakeIfStepVertical(){
         addSnakeComponentsToGameBoard();
     }
     else {
-        theEndOfTheGame();
+       THE_END_OF_THE_GAME = true;
     }
 }
 function canTurnEastIfStepVertical(){
@@ -412,11 +413,6 @@ function isBitten(headBoardIndex){
     return false;
 }
 
-function theEndOfTheGame(){
-initGame();
-window.location.reload();
-}
-
 function createNextLevelBoard(){
 for(let i = 0; i < GAME_BOARD.length; i++){
     GAME_BOARD[i].color = 'transparent';
@@ -431,65 +427,65 @@ for(let i = 0; i < GAME_BOARD.length; i++){
 }
 
 function calcLevel(){
-    if(SNAKE.length >= MIN_LENGTH_OF_SNAKE && NUMBER_OF_LEAF + MIN_LENGTH_OF_SNAKE > SNAKE.length){
-        LEVEL = 'I.'
-    }
-    else if(SNAKE.length >= NUMBER_OF_LEAF + MIN_LENGTH_OF_SNAKE && 2 * NUMBER_OF_LEAF + MIN_LENGTH_OF_SNAKE > SNAKE.length){
-        LEVEL = 'II.'
-    }
-    else if(SNAKE.length >= 2 * NUMBER_OF_LEAF + MIN_LENGTH_OF_SNAKE && 3 * NUMBER_OF_LEAF + MIN_LENGTH_OF_SNAKE > SNAKE.length){
-        LEVEL = 'III.'
-    }
-    else if(SNAKE.length >= 3 * NUMBER_OF_LEAF + MIN_LENGTH_OF_SNAKE && 4 * NUMBER_OF_LEAF + MIN_LENGTH_OF_SNAKE > SNAKE.length){
-        LEVEL = 'IV.'
-    }
-    else if(SNAKE.length >= 4 * NUMBER_OF_LEAF + MIN_LENGTH_OF_SNAKE && 5 * NUMBER_OF_LEAF + MIN_LENGTH_OF_SNAKE > SNAKE.length){
-        LEVEL = 'V.'
-    }
-    else if(SNAKE.length >= 5 * NUMBER_OF_LEAF + MIN_LENGTH_OF_SNAKE && 6 * NUMBER_OF_LEAF + MIN_LENGTH_OF_SNAKE > SNAKE.length){
-        LEVEL = 'VI.'
-    }
-    else if(SNAKE.length >= 6 * NUMBER_OF_LEAF + MIN_LENGTH_OF_SNAKE && 7 * NUMBER_OF_LEAF + MIN_LENGTH_OF_SNAKE > SNAKE.length){
-        LEVEL = 'VII.'
-    }
-    else if(SNAKE.length >= 7 * NUMBER_OF_LEAF + MIN_LENGTH_OF_SNAKE && 8 * NUMBER_OF_LEAF + MIN_LENGTH_OF_SNAKE > SNAKE.length){
-        LEVEL = 'VIII.'
-    }
-    else if(SNAKE.length >= 8 * NUMBER_OF_LEAF + MIN_LENGTH_OF_SNAKE && 9 * NUMBER_OF_LEAF + MIN_LENGTH_OF_SNAKE > SNAKE.length){
-        LEVEL = 'IX.'
-    }
-    else {
-        SCORE += 100;
-    }
+    if(MIN_LENGTH_OF_SNAKE + NUMBER_OF_LEAF >= SNAKE.length){
+        LEVEL = 'I.';
+     }
+     else if(SNAKE.length > MIN_LENGTH_OF_SNAKE + NUMBER_OF_LEAF && MIN_LENGTH_OF_SNAKE + 2 * NUMBER_OF_LEAF >= SNAKE.length){
+        LEVEL = 'II.';
+     }
+     else if(SNAKE.length > MIN_LENGTH_OF_SNAKE + 2 * NUMBER_OF_LEAF && MIN_LENGTH_OF_SNAKE + 3 * NUMBER_OF_LEAF >= SNAKE.length){
+        LEVEL = 'III.';
+     }
+     else if(SNAKE.length > MIN_LENGTH_OF_SNAKE + 3 * NUMBER_OF_LEAF && MIN_LENGTH_OF_SNAKE + 4 * NUMBER_OF_LEAF >= SNAKE.length){
+        LEVEL = 'IV.';
+     }
+     else if(SNAKE.length > MIN_LENGTH_OF_SNAKE + 4 * NUMBER_OF_LEAF && MIN_LENGTH_OF_SNAKE + 5 * NUMBER_OF_LEAF >= SNAKE.length){
+        LEVEL = 'V.';
+     }
+     else if(SNAKE.length > MIN_LENGTH_OF_SNAKE + 5 * NUMBER_OF_LEAF && MIN_LENGTH_OF_SNAKE + 6 * NUMBER_OF_LEAF >= SNAKE.length){
+        LEVEL = 'VI.';
+     }
+     else if(SNAKE.length > MIN_LENGTH_OF_SNAKE + 6 * NUMBER_OF_LEAF && MIN_LENGTH_OF_SNAKE + 7 * NUMBER_OF_LEAF >= SNAKE.length){
+        LEVEL = 'VII.';
+     }
+     else if(SNAKE.length > MIN_LENGTH_OF_SNAKE + 7 * NUMBER_OF_LEAF && MIN_LENGTH_OF_SNAKE + 8 * NUMBER_OF_LEAF >= SNAKE.length){
+        LEVEL = 'VIII.';
+     }
+     else if(SNAKE.length > MIN_LENGTH_OF_SNAKE + 8 * NUMBER_OF_LEAF && MIN_LENGTH_OF_SNAKE + 9 * NUMBER_OF_LEAF >= SNAKE.length) {
+        LEVEL = 'IX.';
+     }
+     else{
+        LEVEL = 'X.';
+     }
 
 }
 
 function calcScore(){
-if(SNAKE.length >= MIN_LENGTH_OF_SNAKE && NUMBER_OF_LEAF + MIN_LENGTH_OF_SNAKE >= SNAKE.length){
+if(MIN_LENGTH_OF_SNAKE + NUMBER_OF_LEAF >= SNAKE.length){
     SCORE += 10;
 }
-else if(SNAKE.length > NUMBER_OF_LEAF + MIN_LENGTH_OF_SNAKE && 2 * NUMBER_OF_LEAF + MIN_LENGTH_OF_SNAKE >= SNAKE.length){
+else if(SNAKE.length > MIN_LENGTH_OF_SNAKE + NUMBER_OF_LEAF && MIN_LENGTH_OF_SNAKE + 2 * NUMBER_OF_LEAF >= SNAKE.length){
     SCORE += 20;
 }
-else if(SNAKE.length > 2 * NUMBER_OF_LEAF + MIN_LENGTH_OF_SNAKE && 3 * NUMBER_OF_LEAF + MIN_LENGTH_OF_SNAKE >= SNAKE.length){
+else if(SNAKE.length > MIN_LENGTH_OF_SNAKE + 2 * NUMBER_OF_LEAF && MIN_LENGTH_OF_SNAKE + 3 * NUMBER_OF_LEAF >= SNAKE.length){
     SCORE += 30;
 }
-else if(SNAKE.length > 3 * NUMBER_OF_LEAF + MIN_LENGTH_OF_SNAKE && 4 * NUMBER_OF_LEAF + MIN_LENGTH_OF_SNAKE >= SNAKE.length){
+else if(SNAKE.length > MIN_LENGTH_OF_SNAKE + 3 * NUMBER_OF_LEAF && MIN_LENGTH_OF_SNAKE + 4 * NUMBER_OF_LEAF >= SNAKE.length){
     SCORE += 40;
 }
-else if(SNAKE.length > 4 * NUMBER_OF_LEAF + MIN_LENGTH_OF_SNAKE && 5 * NUMBER_OF_LEAF + MIN_LENGTH_OF_SNAKE >= SNAKE.length){
+else if(SNAKE.length > MIN_LENGTH_OF_SNAKE + 4 * NUMBER_OF_LEAF && MIN_LENGTH_OF_SNAKE + 5 * NUMBER_OF_LEAF >= SNAKE.length){
     SCORE += 50;
 }
-else if(SNAKE.length > 5 * NUMBER_OF_LEAF + MIN_LENGTH_OF_SNAKE && 6 * NUMBER_OF_LEAF + MIN_LENGTH_OF_SNAKE >= SNAKE.length){
+else if(SNAKE.length > MIN_LENGTH_OF_SNAKE + 5 * NUMBER_OF_LEAF && MIN_LENGTH_OF_SNAKE + 6 * NUMBER_OF_LEAF >= SNAKE.length){
     SCORE += 60;
 }
-else if(SNAKE.length > 6 * NUMBER_OF_LEAF + MIN_LENGTH_OF_SNAKE && 7 * NUMBER_OF_LEAF + MIN_LENGTH_OF_SNAKE >= SNAKE.length){
+else if(SNAKE.length > MIN_LENGTH_OF_SNAKE + 6 * NUMBER_OF_LEAF && MIN_LENGTH_OF_SNAKE + 7 * NUMBER_OF_LEAF >= SNAKE.length){
     SCORE += 70;
 }
-else if(SNAKE.length > 7 * NUMBER_OF_LEAF + MIN_LENGTH_OF_SNAKE && 8 * NUMBER_OF_LEAF + MIN_LENGTH_OF_SNAKE >= SNAKE.length){
+else if(SNAKE.length > MIN_LENGTH_OF_SNAKE + 7 * NUMBER_OF_LEAF && MIN_LENGTH_OF_SNAKE + 8 * NUMBER_OF_LEAF >= SNAKE.length){
     SCORE += 80;
 }
-else if(SNAKE.length > 8 * NUMBER_OF_LEAF + MIN_LENGTH_OF_SNAKE && 9 * NUMBER_OF_LEAF + MIN_LENGTH_OF_SNAKE >= SNAKE.length){
+else if(SNAKE.length > MIN_LENGTH_OF_SNAKE + 8 * NUMBER_OF_LEAF && MIN_LENGTH_OF_SNAKE + 9 * NUMBER_OF_LEAF >= SNAKE.length){
     SCORE += 90;
 }
 else {
@@ -498,40 +494,40 @@ else {
 }
 
 function calcSpeed(){
-    if(SNAKE.length >= MIN_LENGTH_OF_SNAKE && NUMBER_OF_LEAF + MIN_LENGTH_OF_SNAKE >= SNAKE.length){
-        SPEED = 500;
+    if(MIN_LENGTH_OF_SNAKE + NUMBER_OF_LEAF >= SNAKE.length){
+       SPEED = 500;
     }
-    else if(SNAKE.length > NUMBER_OF_LEAF + MIN_LENGTH_OF_SNAKE && 2 * NUMBER_OF_LEAF + MIN_LENGTH_OF_SNAKE >= SNAKE.length){
+    else if(SNAKE.length > MIN_LENGTH_OF_SNAKE + NUMBER_OF_LEAF && MIN_LENGTH_OF_SNAKE + 2 * NUMBER_OF_LEAF >= SNAKE.length){
         SPEED = 450;
     }
-    else if(SNAKE.length > 2 * NUMBER_OF_LEAF + MIN_LENGTH_OF_SNAKE && 3 * NUMBER_OF_LEAF + MIN_LENGTH_OF_SNAKE >= SNAKE.length){
+    else if(SNAKE.length > MIN_LENGTH_OF_SNAKE + 2 * NUMBER_OF_LEAF && MIN_LENGTH_OF_SNAKE + 3 * NUMBER_OF_LEAF >= SNAKE.length){
         SPEED = 400;
     }
-    else if(SNAKE.length > 3 * NUMBER_OF_LEAF + MIN_LENGTH_OF_SNAKE && 4 * NUMBER_OF_LEAF + MIN_LENGTH_OF_SNAKE >= SNAKE.length){
+    else if(SNAKE.length > MIN_LENGTH_OF_SNAKE + 3 * NUMBER_OF_LEAF && MIN_LENGTH_OF_SNAKE + 4 * NUMBER_OF_LEAF >= SNAKE.length){
         SPEED = 350;
     }
-    else if(SNAKE.length > 4 * NUMBER_OF_LEAF + MIN_LENGTH_OF_SNAKE && 5 * NUMBER_OF_LEAF + MIN_LENGTH_OF_SNAKE >= SNAKE.length){
+    else if(SNAKE.length > MIN_LENGTH_OF_SNAKE + 4 * NUMBER_OF_LEAF && MIN_LENGTH_OF_SNAKE + 5 * NUMBER_OF_LEAF >= SNAKE.length){
         SPEED = 300;
     }
-    else if(SNAKE.length > 5 * NUMBER_OF_LEAF + MIN_LENGTH_OF_SNAKE && 6 * NUMBER_OF_LEAF + MIN_LENGTH_OF_SNAKE >= SNAKE.length){
+    else if(SNAKE.length > MIN_LENGTH_OF_SNAKE + 5 * NUMBER_OF_LEAF && MIN_LENGTH_OF_SNAKE + 6 * NUMBER_OF_LEAF >= SNAKE.length){
         SPEED = 250;
     }
-    else if(SNAKE.length > 6 * NUMBER_OF_LEAF + MIN_LENGTH_OF_SNAKE && 7 * NUMBER_OF_LEAF + MIN_LENGTH_OF_SNAKE >= SNAKE.length){
+    else if(SNAKE.length > MIN_LENGTH_OF_SNAKE + 6 * NUMBER_OF_LEAF && MIN_LENGTH_OF_SNAKE + 7 * NUMBER_OF_LEAF >= SNAKE.length){
         SPEED = 200;
     }
-    else if(SNAKE.length > 7 * NUMBER_OF_LEAF + MIN_LENGTH_OF_SNAKE && 8 * NUMBER_OF_LEAF + MIN_LENGTH_OF_SNAKE >= SNAKE.length){
+    else if(SNAKE.length > MIN_LENGTH_OF_SNAKE + 7 * NUMBER_OF_LEAF && MIN_LENGTH_OF_SNAKE + 8 * NUMBER_OF_LEAF >= SNAKE.length){
         SPEED = 150;
     }
-    else if(SNAKE.length > 8 * NUMBER_OF_LEAF + MIN_LENGTH_OF_SNAKE && 9 * NUMBER_OF_LEAF + MIN_LENGTH_OF_SNAKE >= SNAKE.length){
+    else if(SNAKE.length > MIN_LENGTH_OF_SNAKE + 8 * NUMBER_OF_LEAF && MIN_LENGTH_OF_SNAKE + 9 * NUMBER_OF_LEAF >= SNAKE.length){
         SPEED = 100;
     }
     else {
-        SPEED = 100;
+        SPEED = 50;
     }
 }
 
 export { GAME_BOARD, SNAKE,stepSnake, turnNorthSnakeIfStepHorizontal, turnSouthSnakeIfStepHorizontal, 
         turnWestSnakeIfStepVertical, turnEastSnakeIfStepVertical, createNextLevelBoard, calcLevel, calcSpeed,
-        SCORE, LEVEL, SPEED, LEAF_STORE };
+        SCORE, LEVEL, SPEED, LEAF_STORE, THE_END_OF_THE_GAME };
 
 

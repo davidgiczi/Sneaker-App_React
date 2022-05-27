@@ -102,9 +102,10 @@ color: #f95151;
   width: 600px;
   font-family: Coustard, serif;
   font-weight: bold;
+  font-size: 40px;
+  font-style: 'trans';
   justify-content: center;
   z-index: 1;
-  color: #f95151;
   animation: blinker 1s linear infinite;
 }
 
